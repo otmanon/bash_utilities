@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Making video from images in directoy $1..."
+ffmpeg.exe -i $1/%4d.png -q:v 3 -s 1920x1080 -vcodec mpeg4 -pix_fmt yuv420p $2.mp4
+
+ffmpeg -i $1 -filter_complex 'fps=24,scale=320:-1:flags=lanczos,split [o1] [o2];[o1] palettegen
+ [p]; [o2] fifo [o3];[o3] [p] paletteuse' $2
